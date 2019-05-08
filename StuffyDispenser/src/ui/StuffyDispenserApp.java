@@ -75,9 +75,9 @@ public class StuffyDispenserApp {
 		String size = Console.getString("Enter stuffy size: ");
 		int limbs = Console.getInt("Enter number of limbs: ");
 
-		Stuffy s= new Stuffy(type, color, size, limbs);
+		Stuffy s = new Stuffy(type, color, size, limbs);
 		if (stuffyDAO.add(s)) {
-			System.out.println("Product " + s.getColor() + " " + s.getType() +  " successfully added.");
+			System.out.println("Product " + s.getColor() + " " + s.getType() + " successfully added.");
 		} else {
 			System.out.println("Error adding product.");
 		}

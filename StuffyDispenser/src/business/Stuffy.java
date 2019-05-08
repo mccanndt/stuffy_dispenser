@@ -7,7 +7,7 @@ public class Stuffy {
 	private String color;
 	private String size;
 	private int limbs;
-	
+
 	// Constructors
 	public Stuffy() {
 		super();
@@ -20,7 +20,7 @@ public class Stuffy {
 		this.size = size;
 		this.limbs = limbs;
 	}
-	
+
 	public Stuffy(int id, String type, String color, String size, int limbs) {
 		super();
 		this.id = id;
@@ -76,6 +76,5 @@ public class Stuffy {
 	public String toString() {
 		return "Stuffy [id=" + id + ", type=" + type + ", color=" + color + ", size=" + size + ", limbs=" + limbs + "]";
 	}
-	
-	
+
 }
