@@ -59,10 +59,10 @@ public class StuffyDispenserApp {
 		List<Stuffy> stuffies = stuffyDAO.getAll();
 		StringBuilder sb = new StringBuilder();
 		for (Stuffy s : stuffies) {
-			sb.append(StringUtils.padWithSpaces(Integer.toString(s.getId()), 3));
-			sb.append(StringUtils.padWithSpaces(s.getType(), 20));
-			sb.append(StringUtils.padWithSpaces(s.getColor(), 10));
-			sb.append(StringUtils.padWithSpaces(s.getSize(), 10));
+			sb.append(StringUtils.padWithSpaces(Integer.toString(s.getId()), 4));
+			sb.append(StringUtils.padWithSpaces(s.getType(), 21));
+			sb.append(StringUtils.padWithSpaces(s.getColor(), 11));
+			sb.append(StringUtils.padWithSpaces(s.getSize(), 11));
 			sb.append(s.getLimbs());
 			sb.append("\n");
 		}
