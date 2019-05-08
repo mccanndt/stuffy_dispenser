@@ -3,7 +3,7 @@ package db;
 import java.util.List;
 
 public interface DAO<T> {
-	T get(String code);
+	T get(int id);
 
 	List<T> getAll();
 

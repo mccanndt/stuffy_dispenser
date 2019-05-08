@@ -13,24 +13,26 @@ import business.Stuffy;
 public class StuffyDB implements DAO<Stuffy> {
 
 	private Connection getConnection() throws SQLException {
-		String dbUrl = "jdbc:mysql://localhost:3306/mma";
-		String username = "mma_user";
+		String dbUrl = "jdbc:mysql://localhost:3306/stuffyDB";
+		String username = "stuffyDB_user";
 		String password = "sesame";
 		Connection connection = DriverManager.getConnection(dbUrl, username, password);
 		return connection;
 	}
 
 	@Override
-	public Stuffy get(String code) {
-		String sql = "SELECT Code, Description, Price FROM Product WHERE Code = ?";
+	public Stuffy get(int id) {
+		String sql = "SELECT * FROM Stuffy WHERE ID = ?";
 		try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, code);
+			ps.setString(1, Integer.toString(id));
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				String description = rs.getString("Description");
-				double price = rs.getDouble("Price");
-				Stuffy p = new Stuffy(code, description, price);
-				return p;
+				String type = rs.getString("Type");
+				String color = rs.getString("Color");
+				String size = rs.getString("Size");
+				int limbs = rs.getInt("Limbs");
+				Stuffy s = new Stuffy(id, type, color, size, limbs);
+				return s;
 			} else {
 				return null;
 			}
@@ -42,33 +44,35 @@ public class StuffyDB implements DAO<Stuffy> {
 
 	@Override
 	public List<Stuffy> getAll() {
-		String sql = "SELECT Code, Description, Price FROM Product";
-		List<Stuffy> products = new ArrayList<>();
+		String sql = "SELECT * FROM Stuffy";
+		List<Stuffy> stuffies = new ArrayList<>();
 		try (Connection conn = getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
 				ResultSet rs = ps.executeQuery()) {
 			while (rs.next()) {
-				String code = rs.getString("Code");
-				String description = rs.getString("Description");
-				double price = rs.getDouble("Price");
-
-				Stuffy p = new Stuffy(code, description, price);
-				products.add(p);
+				int id = rs.getInt("ID");
+				String type = rs.getString("Type");
+				String color = rs.getString("Color");
+				String size = rs.getString("Size");
+				int limbs = rs.getInt("Limbs");
+				Stuffy s = new Stuffy(id, type, color, size, limbs);
+				stuffies.add(s);
 			}
 		} catch (SQLException e) {
 			System.err.println(e);
 			return null;
 		}
-		return products;
+		return stuffies;
 	}
 
 	@Override
 	public boolean add(Stuffy t) {
-		String sql = "INSERT INTO Product (Code, Description, Price) VALUES (?, ?, ?)";
+		String sql = "INSERT INTO Stuffy (Type, Color, Size, Limbs) VALUES (?, ?, ?, ?)";
 		try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, t.getCode());
-			ps.setString(2, t.getDescription());
-			ps.setDouble(3, t.getPrice());
+			ps.setString(1, t.getType());
+			ps.setString(2, t.getColor());
+			ps.setString(3, t.getSize());
+			ps.setInt(4, t.getLimbs());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e);
@@ -85,9 +89,9 @@ public class StuffyDB implements DAO<Stuffy> {
 
 	@Override
 	public boolean delete(Stuffy t) {
-		String sql = "DELETE FROM Product WHERE Code = ?";
+		String sql = "DELETE FROM Stuffy WHERE ID = ?";
 		try (Connection conn = getConnection(); PreparedStatement ps = conn.prepareStatement(sql)) {
-			ps.setString(1, t.getCode());
+			ps.setInt(1, t.getId());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			System.err.println(e);
